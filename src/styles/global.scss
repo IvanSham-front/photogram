@@ -1,0 +1,43 @@
+*, ::after, ::before {
+    margin: 0;
+    padding: 0;
+}
+
+h1,h2,h3,h4,h5 {
+    margin: 0;
+    padding: 0;
+}
+
+ul,li {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.fixed-container {
+    display: block;
+    @include fix-cont(1400px, 20px); 
+    margin: 0 auto;
+    @media (max-width: $medium) {
+        @include fix-cont($medium, 20px)
+    }
+    @media (max-width: $small) {
+        @include fix-cont($small, 25px)
+    }
+    @media (max-width: $mini) {
+        @include fix-cont($mini, 25px)
+    }
+    
+}
+header {
+    min-width: 320px;
+}
+
+body {
+    font-family: 'Roboto', 'Arial', serif;
+    min-width: 320px;
+}
+
+img {
+    max-width: 100%;    
+}

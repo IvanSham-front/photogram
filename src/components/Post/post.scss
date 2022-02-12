@@ -1,0 +1,120 @@
+.post {
+    position: relative;
+    -webkit-box-shadow: 1px -3px 8px 2px rgba(0, 0, 0, 0.2);
+    -moz-box-shadow: 1px -3px 8px 2px rgba(0, 0, 0, 0.2);
+    box-shadow: 1px -3px 8px 2px rgba(0, 0, 0, 0.2);
+    min-height: 225px;
+    @media (max-width: $medium) {
+        min-height: 195px;
+    }
+    @media (max-width:$small) {
+        min-height: 150px;
+    }
+}
+
+.post__inner {
+    margin-bottom: 20px;
+}
+
+.post__hidden {
+    opacity: 0;
+    transition: .3s ease;
+    order: 2;
+    &:hover {
+        visibility: visible;
+        opacity: 100;
+    }
+    @media (max-width: $medium) {
+        opacity: 100;
+        visibility: visible;
+    }
+}
+
+.post__info {
+    position: absolute;
+    top: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    width: 100%;
+    z-index: 2;
+    @media (max-width: $medium) {
+        position: static;
+        padding: 10px 0;
+    }
+}
+
+.post__user {
+    padding-left: 10px;
+    transition: .2s;
+    &:hover {
+        transform: scale(1.08);
+    }
+}
+
+.user-info__inner-link {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: $lightGrey;
+    @include font(14px, normal);
+    @media (max-width: $medium) {
+        color: $black;
+    }
+
+}
+
+.user-info__portrait {
+    @include circle;
+    margin-right: 10px;
+}
+
+.post__buttons {
+    padding-right: 10px;
+    width: 17%;
+}
+
+.btn {
+    width: 25px;
+    height: 25px;
+    border: none;
+    position: relative;
+    background: none;
+    cursor: pointer;
+    transition: .2s;
+    &:hover {
+        transform: scale(1.3)
+    }
+}
+
+.btn__icon-like {
+    transition: .2s;
+}
+
+.likes {
+    display: flex;
+    align-items: center;
+}
+
+.likes_end {
+    justify-content: flex-end;
+}
+
+.blackout {
+    background-color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    cursor: zoom-in;
+    @media (max-width: $medium) {
+        background-color: rgba(0, 0, 0, 0);
+        height: 80%;
+        top: 50px;
+        
+    }
+}
+
+

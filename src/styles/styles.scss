@@ -1,0 +1,9 @@
+@import 'mixins';
+@import 'variables';
+@import 'fonts';
+@import 'global.scss';
+@import '../components/header/header.scss';
+@import '../components/main/photolist.scss';
+@import '../components/Post/post.scss';
+@import '../components/main/spiner.scss';
+@import '../components/PhotoDetail/photo-details.scss';
