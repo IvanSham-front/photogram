@@ -70,6 +70,7 @@
 }
 
 .photo-detail__image {
+    min-height: 400px;
     @include flex-box(column, space-between);
     align-items: center;
 }

@@ -9,14 +9,14 @@ import 'normalize.css'
 import '../styles/styles.scss'
 import { accessKey } from "../unsplash/keys";
 import { toJson } from "unsplash-js";
-import {BrowserRouter, Route, Routes} from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PhotoDetail from "../components/PhotoDetail/PhotoDetail";
 
 
 const authenticationUrl = unsplashUser.auth.getAuthenticationUrl([
   "public",
   "write_likes"
- ]);
+]);
 
 class App extends React.Component {
   constructor(props) {
@@ -34,6 +34,7 @@ class App extends React.Component {
     window.location.assign(authenticationUrl)
   }
 
+
   onLogout() {
     Cookies.remove('access_token');
     let unsplashUserError = unsplashUser;
@@ -42,7 +43,7 @@ class App extends React.Component {
     let url = new URL(document.location);
     url.searchParams.delete('code');
     window.location.assign(url)
-    this.setState({auth: false});
+    this.setState({ auth: false });
   }
 
 
@@ -51,35 +52,35 @@ class App extends React.Component {
       const code = window.location.search.split('code=')[1];
       if (typeof code === 'string' && code.length > 1) {
         unsplashUser.auth.userAuthentication(code)
-        .then((result) => result.json())
-        .then((json) => {
-          if (json.access_token) {
-            unsplashUser.auth.setBearerToken(json.access_token);
-            Cookies.set('access_token', json.access_token);
-            unsplashUser.currentUser.profile()
-            .then(toJson)
-            .then(data => {
-              this.setState({
-                currentUser: data,
-                auth: true, 
-              })
-            })
-          }        
-        })
+          .then((result) => result.json())
+          .then((json) => {
+            if (json.access_token) {
+              unsplashUser.auth.setBearerToken(json.access_token);
+              Cookies.set('access_token', json.access_token);
+              unsplashUser.currentUser.profile()
+                .then(toJson)
+                .then(data => {
+                  this.setState({
+                    currentUser: data,
+                    auth: true,
+                  })
+                })
+            }
+          })
       }
     } else {
       unsplashUser.auth.setBearerToken(Cookies.get('access_token'))
       unsplashUser.currentUser.profile()
-      .then(toJson)
-      .then(data => {
-        this.setState ({
-          currentUser: data,
-          auth: true
+        .then(toJson)
+        .then(data => {
+          this.setState({
+            currentUser: data,
+            auth: true
+          })
         })
-      })
     }
     this.updateColumns();
-    window.addEventListener('resize' , this.updateColumns)
+    window.addEventListener('resize', this.updateColumns)
   }
 
   componentWillUnmount() {
@@ -90,18 +91,20 @@ class App extends React.Component {
     const windowWidth = document.documentElement.clientWidth;
     console.log(windowWidth)
     if (windowWidth <= 1024 && windowWidth > 768) {
-      this.setState({columns: 2})
+      this.setState({ columns: 2 })
     } else if (windowWidth <= 768) {
-      this.setState({columns: 1})
+      this.setState({ columns: 1 })
     } else {
-      this.setState({columns: 3})
+      this.setState({ columns: 3 })
     }
   }
 
   render() {
     const auth = this.state.auth;
     let header;
-    
+
+    window.onLogin = this.onLogin
+
     if (auth) {
       header = <Header
         logo={logo}
@@ -116,22 +119,21 @@ class App extends React.Component {
         logo={logo}
         onClick={this.onLogin}
         auth={auth}
-        />
+      />
     }
-    return ( 
+    return (
       <BrowserRouter>
-          <div className="App">
-            {header}
-             
-            <Routes>
-              <Route path='/' element={<PhotoList
-                                         auth={this.state.auth} 
-                                         columns={this.state.columns}/>}/>
-              <Route path="/photo/id=:id" element={<PhotoDetail auth={this.state.auth}/>}>    
-              </Route>
-            </Routes>
-                  
-          </div> 
+        <div className="App">
+          {header}
+
+          <Routes>
+            <Route path='/' element={<PhotoList
+              auth={this.state.auth}
+              columns={this.state.columns} />} />
+            <Route path="/photo/:id" element={<PhotoDetail auth={this.state.auth} />}/>
+          </Routes>
+
+        </div>
       </BrowserRouter>
 
     );
