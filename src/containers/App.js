@@ -89,7 +89,6 @@ class App extends React.Component {
 
   updateColumns = () => {
     const windowWidth = document.documentElement.clientWidth;
-    console.log(windowWidth)
     if (windowWidth <= 1024 && windowWidth > 768) {
       this.setState({ columns: 2 })
     } else if (windowWidth <= 768) {
@@ -101,38 +100,26 @@ class App extends React.Component {
 
   render() {
     const auth = this.state.auth;
-    let header;
 
     window.onLogin = this.onLogin
 
-    if (auth) {
-      header = <Header
-        logo={logo}
-        onClick={this.onLogout}
-        auth={auth}
-        currentUserName={this.state.currentUser.name}
-        currentUserPhoto={this.state.currentUser.profile_image.medium}
-        currentUserLink={this.state.currentUser.links.html}
-      />
-    } else {
-      header = <Header
-        logo={logo}
-        onClick={this.onLogin}
-        auth={auth}
-      />
-    }
     return (
       <BrowserRouter>
         <div className="App">
-          {header}
-
+          <Header
+            logo={logo}
+            onClick={auth ? this.onLogout : this.onLogin}
+            auth={auth}
+            currentUserName={this.state.currentUser?.name}
+            currentUserPhoto={this.state.currentUser?.profile_image?.medium}
+            currentUserLink={this.state.currentUser?.links?.html}
+          />
           <Routes>
-            <Route path='/' element={<PhotoList
+            <Route path='*' element={<PhotoList
               auth={this.state.auth}
               columns={this.state.columns} />} />
-            <Route path="/photo/:id" element={<PhotoDetail auth={this.state.auth} />}/>
+            <Route path="/photo/:id" element={<PhotoDetail auth={this.state.auth} />} />
           </Routes>
-
         </div>
       </BrowserRouter>
 
